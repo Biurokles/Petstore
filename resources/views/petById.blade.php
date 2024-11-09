@@ -6,13 +6,10 @@
       <p><strong>Status:</strong> {{ $pet['status'] }}</p>
       <p><strong>Id Kategorii:</strong> {{ $pet['category']['id'] ?? '2137' }}</p>
       <p><strong>Kategoria</strong> {{ $pet['category']['name'] ?? 'Takiego zwierza nie da sie skategoryzować' }}</p>
-      <ul>
         @foreach($pet['photoUrls'] ?? [] as $photoUrl)
         <li><img src="{{ $photoUrl }}" alt="{{ $photoUrl ?? 'Animal photo' }}"></li>
         @endforeach
-      </ul>
       <p><strong>Tagi</strong>
-      <ul>
         @if(isset($pet['tags']) && is_array($pet['tags']))
           @foreach($pet['tags'] as $tag)
             <li>{{ $tag['name'] ?? 'No tag name available' }}</li>
@@ -20,9 +17,8 @@
           @else
             <p>No tags available.</p>
           @endif
-        </ul>
         <h4>Aktualizuj peta</h4>
-        <form action="{{ route('updatePet') }}" method="POST">
+        <form action="{{ route('updatePet', $pet['id']) }}" method="POST">
         @csrf
         @method('PUT')
           <input hidden type=text name="petId"  value="{{$pet['id']}}"/>
@@ -48,9 +44,9 @@
         </form>
         <h4>Skasuj peta</h4>
         <form action="{{ route('deletePet', $pet['id']) }}" method="POST">
-        @csrf
-        @method('DELETE')
-        <input hidden type=text name="id"  value="{{$pet['id']}}"/>
+          @csrf
+          @method('DELETE')
+          <input hidden type=text name="id"  value="{{$pet['id']}}"/>
           <button type="submit" >Skasuj</button>
         </form>
     </body>

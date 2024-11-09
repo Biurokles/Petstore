@@ -67,6 +67,6 @@ public $status = [
             'status' => $petStatus
         ];
         $response = Http::post('https://petstore.swagger.io/v2/pet',$apiData);
-        return $response->json()['id'];
+        return redirect('/id/'.$response->json()['id']);
     }
 }

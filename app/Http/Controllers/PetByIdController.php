@@ -25,7 +25,7 @@ class PetByIdController extends Controller
         }
 
     }
-    public function updatePet(Request $request)
+    public function updatePet($id,Request $request)
     {
         $data = $request->all();
         $tags = array_filter($data, function ($key) {
@@ -69,7 +69,7 @@ class PetByIdController extends Controller
 
 
       $apiData = [
-            'id' => $request->input('petId'),
+            'id' => $id,
             'category' => [
                 'id' => '0',
                 'name' =>$request->input('petCategory')
@@ -86,7 +86,7 @@ class PetByIdController extends Controller
 
         if($response->successful() && $response->json() != [])
         {
-            return redirect()->route('showPet', ['id' => $request->input('petId'),]);
+            return redirect()->route('showPet', ['id' => $id,]);
         }
         else{
             return view('error/notUpdated');
